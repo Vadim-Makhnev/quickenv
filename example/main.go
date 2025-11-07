@@ -1,20 +1,27 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/Vadim-Makhnev/quickenv"
 )
 
 func main() {
-	count, err := quickenv.Load(&quickenv.LoadOptions{Overwrite: true, Debug: true})
+	// Load .env file with debug output
+	count, err := quickenv.Load(&quickenv.LoadOptions{
+		Pathname:  ".env.example", // Name of the env file to load
+		Debug:     true,           // Print loaded/skipped lines
+		MaxLevels: 3,              // Search up to 3 parent directories
+	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to load .env:", err)
 	}
 
-	str := quickenv.GetEnv("CONFIG_PATH", "config/local.env")
-	port := quickenv.GetEnv("DB_PORT", "8000")
+	// Safely get values with defaults
+	configPath := quickenv.GetEnv("CONFIG_PATH", "config/local.yaml")
+	dbPort := quickenv.GetEnv("DB_PORT", "8000")
 
-	fmt.Println(count, str, port)
+	log.Printf("Loaded %d vars\n", count)
+	log.Println("CONFIG_PATH =", configPath)
+	log.Println("DB_PORT     =", dbPort)
 }
