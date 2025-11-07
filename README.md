@@ -21,12 +21,12 @@ go get github.com/Vadim-Makhnev/quickenv
 ```
 
 ## Usage
-# Add your .env file in the root
+Add your .env file in the root
 ```env
 SECRET_KEY=qwerty123
 DB_PASSWORD=password
 ```
-# Load variables in your Go app
+Load variables in your Go app
 ```go
 package main
 
@@ -53,7 +53,7 @@ func main() {
     log.Println("DB Port:", dbPort)
 }
 ```
-# Or use MustLoad for fail-fast initialization
+Or use MustLoad for fail-fast initialization
 ```go
 func main() {
     count := quickenv.MustLoad() // panics on error
